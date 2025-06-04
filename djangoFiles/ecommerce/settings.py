@@ -72,12 +72,25 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+# Load database configuration from environment variables or use defaults
+# Ensure you have the 'psycopg2' package installed for PostgreSQL support
+import psycopg2  # Ensure psycopg2 is installed for PostgreSQL support
+# If you don't have psycopg2 installed, you can install it using pip:
+# pip install psycopg2-binary
+# or use psycopg2-binary for a simpler installation 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'ecommerce_db'),
+        'USER': os.getenv('DB_USER', 'admin'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'admin123'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+
 
 
 # Password validation
